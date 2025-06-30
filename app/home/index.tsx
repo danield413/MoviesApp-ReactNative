@@ -10,9 +10,9 @@ const HomeScreen = () => {
 
     const safeArea = useSafeAreaInsets();
 
-    const { nowPlayingQuery, popularQuery } = useMovies();
+    const { nowPlayingQuery, popularQuery, topRatedQuery, upcomingQuery } = useMovies();
 
-    if (nowPlayingQuery.isLoading || popularQuery.isLoading) {
+    if (nowPlayingQuery.isLoading || popularQuery.isLoading || topRatedQuery.isLoading || upcomingQuery.isLoading) {
         return (
             <View className='justify-center items-center flex-1 bg-black'>
                 <ActivityIndicator size="large" color="purple" />
@@ -21,8 +21,14 @@ const HomeScreen = () => {
     }
 
     return (
-        <View  style={{ paddingTop: safeArea.top }}>
-            <Text className='text-3xl font-bold px-4 my-2'>MoviesApp</Text>
+        <View>
+            <View
+                className='bg-indigo-600 flex-row items-center justify-center'
+                style={{ paddingTop: safeArea.top, paddingBottom: 10, paddingHorizontal: 10 }}
+            >
+                <Text className='text-3xl text-white font-bold px-4 my-2'>MoviesApp</Text>
+            </View>
+            {/* <Text className='text-3xl font-bold px-4 my-2'>MoviesApp</Text> */}
 
             {/* carousel de imagenes */}
 
@@ -31,8 +37,14 @@ const HomeScreen = () => {
             />
 
             {/* lista horizontal de peliculas populares */}
-            <MovieHorizontalList movies={popularQuery.data ?? []} title='Populares' />
+            <MovieHorizontalList className='mb-2'  movies={popularQuery.data ?? []} title='Populares' />
 
+            {/* lista horizontal de peliculas mas vistas */}
+            <MovieHorizontalList className='mb-2' movies={topRatedQuery.data ?? []} title='Mas vistas' />
+
+            {/* lista horizontal de peliculas proximas */}
+            <MovieHorizontalList className='mb-2' movies={upcomingQuery.data ?? []} title='Próximas' />
+        
         </View>
     )
 }

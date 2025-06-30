@@ -11,6 +11,7 @@ const RootLayout = () => {
     <Stack 
       screenOptions={{
         headerShown: false,
+       
       }}
     />
     </QueryClientProvider>
