@@ -1,3 +1,4 @@
+import { Movie } from '@/infrastructure/interfaces/movie.interface';
 import MainSlideShow from '@/presentation/components/movies/MainSlideShow';
 import MovieHorizontalList from '@/presentation/components/movies/MovieHorizontalList';
 import { useMovies } from '@/presentation/hooks/useMovies';
@@ -32,19 +33,25 @@ const HomeScreen = () => {
 
             {/* carousel de imagenes */}
 
-            <MainSlideShow 
-               movies={nowPlayingQuery.data ?? []}
+            <MainSlideShow
+                movies={nowPlayingQuery.data ?? []}
             />
 
             {/* lista horizontal de peliculas populares */}
-            <MovieHorizontalList className='mb-2'  movies={popularQuery.data ?? []} title='Populares' />
+            <MovieHorizontalList className='mb-5' movies={popularQuery.data ?? []} title='Populares' />
 
             {/* lista horizontal de peliculas mas vistas */}
-            <MovieHorizontalList className='mb-2' movies={topRatedQuery.data ?? []} title='Mas vistas' />
+            <MovieHorizontalList
+                className='mb-5'
+                movies={(topRatedQuery.data?.pages.flat() as Movie[]) ?? []}
+                title='Mejor Valoradas'
+                loadNextPage={topRatedQuery.fetchNextPage}
+            />
+
 
             {/* lista horizontal de peliculas proximas */}
-            <MovieHorizontalList className='mb-2' movies={upcomingQuery.data ?? []} title='Próximas' />
-        
+            <MovieHorizontalList className='mb-5' movies={upcomingQuery.data ?? []} title='Próximamente' />
+
         </View>
     )
 }
